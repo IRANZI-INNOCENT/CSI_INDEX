@@ -167,17 +167,17 @@ app.layout = html.Div(style={'padding': '20px', 'background': '#ffeeff', 'maxWid
                     html.Label("Feed working members at the expense of non-working", style={'fontWeight': 'bold', 'font-size': '12px'}),
                     dcc.Input(id='input-strategy-j', type='number', style={'width': '100%'})
                 ]),
-                style={'marginBottom': '0px', 'padding': '0px', 'background': 'hsla(0, 100%, 15%, 0.1)', 'width': '100%', 'height': '87px'}
+                style={'marginBottom': '5px', 'padding': '5px', 'background': 'hsla(0, 100%, 15%, 0.1)', 'width': '100%', 'height': '87px'}
             ),
             md=4
         ),
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    html.Label("Ration the money you have and buy prepared food", style={'fontWeight': 'bold', 'font-size': '12px'}),
+                    html.Label("Reduce number of meals eaten in a day", style={'fontWeight': 'bold', 'font-size': '12px'}),
                     dcc.Input(id='input-strategy-k', type='number', style={'width': '100%'})
                 ]),
-                style={'marginBottom': '0px', 'padding': '0px', 'background': 'hsla(0, 100%, 15%, 0.1)', 'width': '100%', 'height': '87px'}
+                style={'marginBottom': '5px', 'padding': '5px', 'background': 'hsla(0, 100%, 15%, 0.1)', 'width': '100%', 'height': '87px'}
             ),
             md=4
         ),
@@ -187,18 +187,15 @@ app.layout = html.Div(style={'padding': '20px', 'background': '#ffeeff', 'maxWid
                     html.Label("Skip entire days without eating", style={'fontWeight': 'bold', 'font-size': '12px'}),
                     dcc.Input(id='input-strategy-l', type='number', style={'width': '100%'})
                 ]),
-                style={'marginBottom': '0px', 'padding': '0px', 'background': 'hsla(0, 100%, 15%, 0.1)', 'width': '100%', 'height': '87px'}
+                style={'marginBottom': '5px', 'padding': '5px', 'background': 'hsla(0, 100%, 15%, 0.1)', 'width': '100%', 'height': '87px'}
             ),
             md=4
         ),
     ], align='center'),
 
-    html.Br(),
-
-    html.Div(id='output-container', style={'fontSize': '30px', 'fontWeight': 'bold', 'padding': '0px', 'textAlign': 'center'}),
+    html.Div(id='output-container', style={'marginTop': '20px'})
 ])
 
-# Define callback to calculate CSI score and update output
 @app.callback(
     Output('output-container', 'children'),
     [
@@ -220,7 +217,7 @@ app.layout = html.Div(style={'padding': '20px', 'background': '#ffeeff', 'maxWid
     ]
 )
 def update_output(location, household_number, num_people, score_a, score_b, score_c, score_d, score_e,
-                 score_f, score_g, score_h, score_i, score_j, score_k, score_l):
+                  score_f, score_g, score_h, score_i, score_j, score_k, score_l):
     
     raw_scores = {
         'a': int(score_a) if score_a else 0,
@@ -240,10 +237,8 @@ def update_output(location, household_number, num_people, score_a, score_b, scor
     result = calculate_weighted_score(location, household_number, num_people, raw_scores)
     
     output_str = f"Location: {result['Location']}, Household Number: {result['Household Number']}, Total Weighted Score: {result['Total Weighted Score']}"
-    html.Hr(style={'borderWidth': '0px', 'borderColor': 'hsl(240, 100%, 50%)'})
     
-    return html.Div(output_str, style={'fontSize': '30px', 'fontWeight': 'bold', 'padding': '0px'}),
-
+    return html.Div(output_str, style={'fontSize': '30px', 'fontWeight': 'bold', 'padding': '0px'})
 
 if __name__ == '__main__':
     app.run_server(debug=True)
